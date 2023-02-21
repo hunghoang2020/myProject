@@ -6,7 +6,9 @@ const handlebars = require('express-handlebars')
 const app = express()
 const port = 3000
 const route = require("./routes/index.js")
-
+const db = require('./config/db')
+// connect to db
+db.connect();
 app.use(express.static(path.join(__dirname,'public')))
 
 // HTTP logger
