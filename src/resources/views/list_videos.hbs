@@ -1,1 +1,35 @@
 <h1>day la list videos</h1>
+<div>
+    {{list_videos_model}}
+</div>
+<table class="table table-dark table-striped">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Name</th>
+      <th scope="col">Description</th>
+      <th scope="col">Type video</th>
+      <th scope="col">Video link</th>
+      <th scope="col">Image link</th>
+      <th scope="col">Action</th>
+  </tr>
+  </thead>
+  <tbody>
+    {{#each list_videos_model}}
+
+    <tr>
+      <th scope="row">1</th>
+      <td>{{this.name}}</td>
+      <td>{{this.decription}}</td>
+      <td>{{this.type_video}}</td>
+      <td>{{this.video_link}}</td>
+      <td>{{this.img}}</td>
+      <td>
+        <button class="btn btn-warning"><i class="fa-solid fa-user"></i> | Edit</button>
+        <button class="btn btn-danger"><i class="fa fa-moon-o"></i> | Delete</button>
+      </td>
+    </tr>
+    {{/each}}
+    
+  </tbody>
+</table>
