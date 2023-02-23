@@ -2,6 +2,7 @@ const path = require('path');
 const express = require('express')
 const morgan = require('morgan')
 const handlebars = require('express-handlebars')
+const bodyParser = require('body-parser')
 
 const app = express()
 const port = 3000
@@ -10,6 +11,11 @@ const db = require('./config/db')
 // connect to db
 db.connect();
 app.use(express.static(path.join(__dirname,'public')))
+//body parser dung de lay data submit form trong bien .body.datakey
+app.use(bodyParser.urlencoded({extended: false}))
+// app.use(bodyParser.json)
+//jwt dung de tao token dang nhap
+
 
 // HTTP logger
 app.use(morgan('combined'));
