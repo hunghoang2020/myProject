@@ -3,6 +3,7 @@ const express = require('express')
 const morgan = require('morgan')
 const handlebars = require('express-handlebars')
 const bodyParser = require('body-parser')
+const cookieParser = require('cookie-parser')
 
 const app = express()
 const port = 3000
@@ -16,7 +17,7 @@ app.use(bodyParser.urlencoded({extended: false}))
 // app.use(bodyParser.json)
 //jwt dung de tao token dang nhap
 
-
+app.use(cookieParser())
 // HTTP logger
 app.use(morgan('combined'));
 //Template engine

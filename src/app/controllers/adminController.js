@@ -2,6 +2,8 @@
 const adminControll_model = require('../models/adminControll.model')
 const {muntipleMongooseObject} = require('../../util/moongoss')
 const jwt = require('jsonwebtoken');
+
+
 class adminController{
 
     index(req, res, next){
@@ -48,26 +50,35 @@ class adminController{
             // res.json('submit thanh cong: ' )
             // console.log(data)
            var token =  jwt.sign({_id : data._id},'mk')
-            return res.json({
-                message : 'thanh cong ',
-                token : token,
-            })
+            // return res.json({
+            //     message : 'thanh cong ',
+            //     token : token,
+            // })
+            res.render('home',{'token': token})
           } else {
             res.json('dang nhap ko thanh cong' )
           }
-
-           
-
         })
         .catch(err => {
             res.status(500).json('loi server')
         })
 
- 
-        
     }
     admin_list_video(req,res,next){
-        res.json('list video')
+        try {
+            var auth = jwt.verify(req.cookies.mycookie,'mk');
+        if(auth){
+            console.log(auth)
+            // res.json('essd')
+            res.render('list_videos')
+        }else{res.json('loi server')}
+            
+        } catch (next) {
+
+            res.json('ban phai dang nhap de thuc hien thao tac nay')
+        }
+        
+        
     }
 }
 
