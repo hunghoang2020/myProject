@@ -3,6 +3,21 @@ const adminControll_model = require('../models/adminControll.model')
 const list_videos_model = require('../models/list_videos.model')
 const {muntipleMongooseObject} = require('../../util/moongoss')
 
+const multer = require("multer");
+const storage = multer.diskStorage({
+    destination : function (req,file,cb){
+        cb(null,'./uploads')
+    },
+    filename : function (req,file,cb){
+        console.log(file)
+        cb(null,file.originalname)
+    }
+})
+const img_upload = multer({storage : storage}).single('img_video');
+const video_upload = multer({storage : storage}).single('video');
+
+
+
 const jwt = require('jsonwebtoken');
 
 
@@ -97,16 +112,31 @@ class adminController{
     add_new_video (req,res,next) {
         res.render('add_new_video')
     }
-
-    
-
     process_form (req, res, next) {
-        console.log('innininin')
-       console.log(req.files['video_name'][0])
-       console.log(req.files['video'][0])
-
-       
-
+    // //    res.json(req.body)
+    // console.log(req.body);
+    // console.log(req.files);
+    // res.json({ message: "Successfully uploaded files" });
+//    console.log('body: '+req.body.video_name)
+img_upload(req,res,function (err){
+        if(err) {
+            res.send(err)
+        }
+        else{
+            console.log(req.body.video_name)
+            res.send('sucess')
+        }
+    })
+    video_upload(req,res,function (err){
+        if(err) {
+            res.send(err)
+        }
+        else{
+            console.log(req.body.video_name)
+            res.send('sucess')
+        }
+    })
+    
 
     }
 }
