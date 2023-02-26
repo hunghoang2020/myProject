@@ -1,6 +1,21 @@
 
 const adminControll_model = require('../models/adminControll.model')
+const list_videos_model = require('../models/list_videos.model')
 const {muntipleMongooseObject} = require('../../util/moongoss')
+
+const multer = require("multer");
+const storage = multer.diskStorage({
+    destination : function (req,file,cb){
+        cb(null,'./uploads')
+    },
+    filename : function (req,file,cb){
+        console.log(file)
+        cb(null,file.originalname)
+    }
+})
+const upload = multer({storage : storage}).single('img_video');
+
+
 const jwt = require('jsonwebtoken');
 
 
@@ -36,11 +51,10 @@ class adminController{
         res.render('./layouts/admin_login', { title: 'my other page', layout: 'admin_login' });
        
     }
+
     login_form(req, res,next){
         var user_name = req.body.email;
         var user_password = req.body.password;
-        // console.log('submit thanh cong' + user_name +'  ' + user_password)
-
         adminControll_model.findOne({
             user_name ,
             user_password ,
@@ -50,11 +64,15 @@ class adminController{
             // res.json('submit thanh cong: ' )
             // console.log(data)
            var token =  jwt.sign({_id : data._id},'mk')
+  
             // return res.json({
             //     message : 'thanh cong ',
             //     token : token,
             // })
-            res.render('home',{'token': token})
+            // res.render('list_videos',{'token': token})
+           res.append('Set-Cookie',"mycookie=" + token)
+        //    res.render('list_videos')
+            res.redirect('/ad_controll/adminlist_videos')
           } else {
             res.json('dang nhap ko thanh cong' )
           }
@@ -68,9 +86,18 @@ class adminController{
         try {
             var auth = jwt.verify(req.cookies.mycookie,'mk');
         if(auth){
-            console.log(auth)
-            // res.json('essd')
-            res.render('list_videos')
+            // console.log(auth)
+            // // res.json('essd')
+            // res.render('list_videos')
+            list_videos_model.find({})
+            .then(list_videos_model => {
+                // list_videos_model  = list_videos_model.map(list_videos_model => list_videos_model.toObject())
+               
+                res.render('list_videos',{
+                    list_videos_model : muntipleMongooseObject(list_videos_model)
+                })
+            })
+            .catch(error => next(err))
         }else{res.json('loi server')}
             
         } catch (next) {
@@ -79,6 +106,27 @@ class adminController{
         }
         
         
+    }
+    add_new_video (req,res,next) {
+        res.render('add_new_video')
+    }
+    process_form (req, res, next) {
+    // //    res.json(req.body)
+    // console.log(req.body);
+    // console.log(req.files);
+    // res.json({ message: "Successfully uploaded files" });
+//    console.log('body: '+req.body.video_name)
+    upload(req,res,function (err){
+        if(err) {
+            res.send(err)
+        }
+        else{
+            console.log(req.body.video_name)
+            res.send('sucess')
+        }
+    })
+    
+
     }
 }
 

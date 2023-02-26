@@ -9,6 +9,8 @@ const app = express()
 const port = 3000
 const route = require("./routes/index.js")
 const db = require('./config/db')
+
+
 // connect to db
 db.connect();
 app.use(express.static(path.join(__dirname,'public')))
@@ -18,6 +20,10 @@ app.use(bodyParser.urlencoded({extended: false}))
 //jwt dung de tao token dang nhap
 
 app.use(cookieParser())
+//body parser
+app.use(express.urlencoded({extended:true}))
+app.use(express.json())
+
 // HTTP logger
 app.use(morgan('combined'));
 //Template engine

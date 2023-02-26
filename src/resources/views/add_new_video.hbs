@@ -1,0 +1,25 @@
+<div class="container mt-3 " data-bs-theme="dark" >
+    <form action='/ad_controll/add_new_video' method='POST' enctype="multipart/form-data">
+        <div class="mb-3">
+            <label for="video_name" class="form-label">Video name</label>
+            <input type="text" name="video_name" class="form-control" id="video_name" placeholder="Input video name hear">
+        </div>
+        
+        <div class=" mb-3 dark ">
+            <label for="floatingTextarea" class="form-label dark">Description for video</label>
+            <textarea class="form-control" name="description for video" placeholder="Leave a comment here" id="floatingTextarea"></textarea>
+           
+        </div>
+       
+        <div class="mb-3">
+            <label for="img_video" class="form-label">Image for video</label>
+            <input class="form-control" type="file" id="img_video" name="img_video">
+        </div>
+         <div class="mb-3">
+            <label for="input_video" class="form-label">Chosse video hear</label>
+            <input class="form-control" type="file" id="input_video" name="video">
+        </div>
+        
+        <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+</div>
