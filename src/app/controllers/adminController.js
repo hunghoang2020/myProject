@@ -4,10 +4,32 @@ const list_videos_model = require('../models/list_videos.model')
 const {muntipleMongooseObject} = require('../../util/moongoss')
 
 const jwt = require('jsonwebtoken');
+const dir_path = require('path');
+const multer = require("multer");
+//config file upload
+var storage = multer.diskStorage({
+    destination: function(req, file, cb) {
+        // console.log(file.mimetype)
+        if(file.mimetype === 'image/jpeg'){
+            cb(null, 'src/uploadss/img/');
+        }else if(file.mimetype === 'video/mp4'){
+            cb(null, 'src/uploadss/video/');
+        }
+    },
+    filename: function(req, file, cb) {
+      cb(null, file.originalname);
+    },
+  });
+
+const upload = multer({ storage: storage });
+
 
 
 class adminController{
 
+     
+
+      
     index(req, res, next){
         // res.render('list_videos');
         // res.json({  name : 'test'})
@@ -94,19 +116,43 @@ class adminController{
         
         
     }
+    //config upload 2 filed in form
+    cpUpload = upload.fields([
+        { name: 'img_video', maxCount: 1 },
+        { name: 'video', maxCount: 1 },
+      ]);
+    //get add video form
     add_new_video (req,res,next) {
         res.render('add_new_video')
     }
-
-    
-
+    // process form add video
     process_form (req, res, next) {
-        console.log('innininin')
-       console.log(req.files['video_name'][0])
-       console.log(req.files['video'][0])
-
+        
+        
+        // console.log(req.files['img_video'][0])
+        // console.log(req.files['video'][0])
        
+        console.log('\n+++++++++++++linnk to brower: ')
+       
+        console.log('D:/pro/'+req.files['img_video'][0].path)
+        console.log(dir_path)
+        
+        // console.log(req.body.video_description)
+        
+        let formData = {
+            name : req.body.video_name,
+            decription : req.body.video_description,
+            type_video : 'this is type',
+            video_link : 'http://localhost:3000/video/'+req.files['video'][0].filename,
+            img : 'http://localhost:3000/img/'+req.files['img_video'][0].filename,
+        };
+       
+        // formData.img_video = 'D:/pro/'+req.files['img_video'][0].path
+        // formData.video = 'D:/pro/'+req.files['video'][0].path
+        const video_list = new list_videos_model(formData)
+        video_list.save()
 
+        res.redirect('/ad_controll/adminlist_videos')
 
     }
 }

@@ -31,12 +31,24 @@ app.use(morgan('combined'));
 app.engine('handlebars', handlebars.engine({}));
 app.set('view engine', 'handlebars');
 //set extendsion handlebar to .hbs
-app.engine('.hbs', handlebars.engine({extname: '.hbs'}));
+app.engine('.hbs', 
+  handlebars.engine({
+    extname: '.hbs',
+    helpers : {
+      sum : (a,b) => a + b
+    },
+  }));
 app.set('view engine', '.hbs');
 app.set('views', './views');
 
 
 app.set('views',path.join(__dirname, '/resources/views') )
+
+//setting middleware
+app.use(express.static(__dirname + '/uploadss/')); //Serves resources from public folder
+
+
+
 
 //Route init
 route(app)
