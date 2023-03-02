@@ -53,14 +53,43 @@
         <input disabled="" placeholder="{{this.img}}"> </input>
         </td>
       <td>
-        <button onclick="edit('{{this.name}}')"   class="btn btn-outline-warning">
+        <button class="btn btn-outline-warning" >
           <i class="fa-solid fa-pen"></i>
         </button>
-        <button class="btn btn-outline-danger"><i  class="fa-solid fa-trash-can"></i></button>
+
+        <button class="btn btn-outline-danger"  data-bs-id="{{this._id}}" data-bs-toggle="modal" data-bs-target="#deleteModal">
+          <i  class="fa-solid fa-trash-can">
+        </i></button>
       </td>
     </tr>
     {{/each}}
-    
+
+<!-- Modal Delete -->
+<div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">New message</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form>
+          <div class="mb-3">
+           <p> ban that su muon xoa</p>
+          </div>
+          
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" id="btn-delete-video">Delete Video</button>
+        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Close</button>
+        
+      </div>
+    </div>
+  </div>
+</div>
+{{!-- Delete hiden form --}}
+<form name="delete-video-form" method="post"></form>
   <script >
   function setCookie(cname, cvalue, exdays) {
   const d = new Date();
@@ -97,12 +126,34 @@ function checkCookie() {
 }
 {{!-- setCookie('mycookie','{{token}}',1) --}}
 
+
+
 </script>
   
 <script>
-function edit(a){
-    alert(a)
+  var idVideo
+  var deleteform = document.forms['delete-video-form']
+  const exampleModal = document.getElementById('deleteModal')
+  exampleModal.addEventListener('shown.bs.modal', event => {
+    // Button that triggered the modal
+    const button = event.relatedTarget
+    // Extract info from data-bs-* attributes
+    const id = button.getAttribute('data-bs-id')
+    // If necessary, you could initiate an AJAX request here
+    // and then do the updating in a callback.
+    idVideo = id
+    // Update the modal's content.
+    
+  })
+
+  var btnDeleteVideo = document.getElementById('btn-delete-video');
+  btnDeleteVideo.onclick = function(){
+    console.log(deleteform)
+    deleteform.action = '/ad_controll/delete/' + idVideo + '?_method=DELETE'
+    deleteform.submit()
   }
 </script>
+  
+
   </tbody>
 </table>

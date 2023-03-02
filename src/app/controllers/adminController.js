@@ -155,6 +155,14 @@ class adminController{
         res.redirect('/ad_controll/adminlist_videos')
 
     }
+    //[DELETE]/ad_controll/delete/:id
+    delete(req,res,next){
+        list_videos_model.deleteOne({_id : req.params.id})
+            .then(() => res.redirect('back'))
+            .catch(next)
+        // console.log('delete')
+        
+    }
 }
 
 module.exports = new adminController;
