@@ -65,7 +65,14 @@ const carousel = new bootstrap.Carousel(myCarouselElement, {
 
 <!-- End Hero Section  -->
 
-
+{{!-- catalog --}}
+<section id="catalog" >
+<div class="device">   
+  <hr  width="30%" size="5px" align="left" color="#aca9a4"/>
+  <h1 style="margin-right: 20px;
+    margin-left: 20px; color:antiquewhite; font-weight: 100;">Top Trending</h1>
+  <hr  width="30%" size="5px" align="right"color="#aca9a4" />
+</div>
 
 <div class=" container mt-4">
 <div class="row row-cols-1 row-cols-md-4 g-4">
@@ -73,20 +80,27 @@ const carousel = new bootstrap.Carousel(myCarouselElement, {
 {{#each list_videos_model}}
 
   <div class="col">
-    <div class="card h-100">
+    <div class=" h-100 ">
       
       <a href="/view_video/{{this._id}}">
-      <img src={{this.img}} class="card-img-top" alt="...">
+       <h1 style="color: red;   
+    position: absolute;
+    margin-top: 20%;">
+        {{this.name}}
+      </h1>
+      <img src={{this.img}} class="card-img-top video_poster" alt="..." > 
+     
       </a>
-      <div class="card-body">
-        <h5 class="card-title">{{this.name}}</h5>
-        <p class="card-text">{{this.decription}}</p>
-      </div>
+      
     </div>
   </div>
 {{/each}}
-
-
-
 </div>
 </div>
+
+
+
+</section>
+{{!-- end catalog --}}
+
+

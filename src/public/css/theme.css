@@ -12,18 +12,6 @@ html {
 a {
   text-decoration: none; }
 
-.container {
-  min-height: 100vh;
-  width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center; }
-
-img {
-  height: 100%;
-  width: 100%;
-  object-fit: cover; }
-
 p {
   color: black;
   font-size: 1.4rem;
@@ -651,3 +639,12 @@ p {
     margin: 1.5%; } }
 
 /* End  Media Query For Desktop */
+.video_poster {
+  border-radius: 10px; }
+
+.device {
+  display: flex;
+  margin-top: 15px;
+  width: 100%;
+  text-align: center;
+  justify-content: center; }
