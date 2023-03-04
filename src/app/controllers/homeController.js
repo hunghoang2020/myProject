@@ -1,6 +1,8 @@
 
 const list_videos_model = require('../models/list_videos.model')
 const {muntipleMongooseObject} = require('../../util/moongoss')
+const {mongooseObject} = require('../../util/moongoss')
+
 
 class homeController{
 
@@ -21,8 +23,15 @@ class homeController{
     
     view(req, res, next){
         
-        console.log(req.query.name);
-        res.render('video')
+        
+        list_videos_model.findById(req.params.video_id)
+        .then( list_videos_model => {
+            res.render('video_detail',{list_videos_model : mongooseObject(list_videos_model)})
+            // res.json(list_videos_model)
+        })
+        .catch(next)
+        
+      
     }
 }
 

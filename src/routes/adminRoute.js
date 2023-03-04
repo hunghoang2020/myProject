@@ -15,6 +15,7 @@ router.post('/ad_controll',adminController.login_form)
 router.get('/ad_controll/add_new_video', adminController.add_new_video)
 router.post('/ad_controll/add_new_video',adminController.cpUpload,adminController.process_form )
 router.delete('/ad_controll/delete/:id',adminController.delete)
+router.get('/ad_controll/edit_video/:id',adminController.getEditVideo)
 // router.use('/list',listVideosController.index)
 
 module.exports = router; 

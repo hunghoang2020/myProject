@@ -1,7 +1,7 @@
 
 const adminControll_model = require('../models/adminControll.model')
 const list_videos_model = require('../models/list_videos.model')
-const {muntipleMongooseObject} = require('../../util/moongoss')
+const {muntipleMongooseObject, mongooseObject} = require('../../util/moongoss')
 
 const jwt = require('jsonwebtoken');
 const dir_path = require('path');
@@ -132,10 +132,10 @@ class adminController{
         // console.log(req.files['img_video'][0])
         // console.log(req.files['video'][0])
        
-        console.log('\n+++++++++++++linnk to brower: ')
+        // console.log('\n+++++++++++++linnk to brower: ')
        
-        console.log('D:/pro/'+req.files['img_video'][0].path)
-        console.log(dir_path)
+        // console.log('D:/pro/'+req.files['img_video'][0].path)
+        // console.log(dir_path)
         
         // console.log(req.body.video_description)
         
@@ -162,6 +162,16 @@ class adminController{
             .catch(next)
         // console.log('delete')
         
+    }
+    // [GET] ad_controll/edit_video/:id
+    getEditVideo(req,res,next){
+        list_videos_model.findById(req.params.id)
+            .then(list_videos_model => res.render('edit_video',{
+                list_videos_model : mongooseObject(list_videos_model)
+            }) )
+            .catch(next)
+        
+
     }
 }
 
